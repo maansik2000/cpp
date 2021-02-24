@@ -1,85 +1,57 @@
 
-  
-#include <bits/stdc++.h> 
-using namespace std; 
+#include <bits/stdc++.h>
+using namespace std;
+ 
 
-int getPairs(int arr[], int N, int K) 
+int OddEvenDegree(int N, int M,
+                    int edges[][2])
 {
-    int count = 0; 
-  
 
-    for (int i = 0; i < N; i++) { 
-  
-        for (int j = i + 1; j < N; j++) { 
-  
+    vector<int> Adj[N + 1];
+     
+    int EvenSum = 0;
+    int OddSum = 0;
+ 
+    for (int i = 0 ; i < M ; i++) {
+        int x = edges[i][0];
+        int y = edges[i][1];
+ 
+        Adj[x].push_back(y);
+        Adj[y].push_back(x);
+    }
+ 
+ 
+    for (int i = 1; i <= N; i++) {
+ 
 
-            if (arr[i] > K * arr[i + 1]) 
-                count++; 
-        } 
-    } 
-    cout << count; 
-} 
-  
-// Driver Code 
-int main() 
-{ 
-    int arr[] = { 5, 6, 2, 1 }; 
-    int N = sizeof(arr) / sizeof(arr[0]); 
-    int K = 2; 
-  
-    // Function Call 
-    getPairs(arr, N, K); 
-  
-    return 0; 
-} 
+        int x = Adj[i].size();
 
-//program 2
-#include <stdio.h>
-#include<stdlib.h>
-
-int* SurpassersKing(int input1_size, int* input1)
+        if (x % 2 != 0)
+        {
+            OddSum += x;
+        }
+        else
+        {
+            EvenSum += x;
+        }
+             
+    }
+     
+    return abs(OddSum - EvenSum);
+}
+ 
+// Driver code
+int main()
 {
-    int i,k;
-    int * count = (int*)malloc(input1_size*sizeof(int));
-    for  (i = 0; i < input1_size; i++)
-        *(count + i) = 0;
-
-
-    for ( i = 0; i < input1_size; i++) 
-    {
-        for ( k = i + 1; k <input1_size; k++) 
-            {
-                    if (input1[i] < input1[k]) {
-                             count[i]++;
-                    }
-            }
-    } 
-
-    return count;
-}
-
-int main() {
-// your code goes here
-int output_size;
-int* output;
-
-int ip1_size = 0;
-int ip1_i;
-int output_i;
-
-printf("Enter the size:\n");
-scanf("%d",&ip1_size);
-int ip1[ip1_size];
-for(ip1_i = 0; ip1_i < ip1_size; ip1_i++) {
-    scanf("%d",%ip1[ip1_i]);
-}
-output = SurpassersKing(ip1_size,ip1);
-output_size = ip1_size;
-
-for(output_i=0; output_i < output_size; output_i++) {
-
-    printf("%d\n",output[output_i]");
-
-}
-return 0;
+    // Vertices and Edges
+    int N = 4, M = 6;
+ 
+    // Edges
+    int edges[M][2] = { { 1, 2 }, { 1, 3 }, { 1, 4 },
+                       { 2, 3 }, { 2, 4 }, { 3, 4 } };
+ 
+    // Function Call
+    cout<< OddEvenDegree(N, M, edges);
+ 
+    return 0;
 }

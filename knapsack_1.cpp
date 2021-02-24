@@ -1,14 +1,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//knapsack using recursion
+//knapsack using dp
 int max(int a, int b)
 { 
     return (a > b) ? a : b; 
 }
- 
-// Returns the maximum value that
-// can be put in a knapsack of capacity W
+
+ //return max value
+
 int knapsack(int W, int wt[], int val[], int n)
 {
     int i, w;

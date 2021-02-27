@@ -1,57 +1,85 @@
-
-#include <bits/stdc++.h>
+#include <algorithm>
+#include <iostream>
+ 
 using namespace std;
  
 
-int OddEvenDegree(int N, int M,
-                    int edges[][2])
+int findPlatform(int arr[], int dep[], int n)
 {
+ 
+ 
+    int plat_needed = 1, result = 1;
+    int i = 1, j = 0;
+ 
 
-    vector<int> Adj[N + 1];
+    for (int i = 0; i < n; i++) {
      
-    int EvenSum = 0;
-    int OddSum = 0;
+        plat_needed = 1;
  
-    for (int i = 0 ; i < M ; i++) {
-        int x = edges[i][0];
-        int y = edges[i][1];
+        for (int j = i + 1; j < n; j++) {
+          
+            if ((arr[i] >= arr[j] && arr[i] <= dep[j]) || 
+           (arr[j] >= arr[i] && arr[j] <= dep[i]))
+                plat_needed++;
+        }
  
-        Adj[x].push_back(y);
-        Adj[y].push_back(x);
+   
+        result = max(result, plat_needed);
     }
  
- 
-    for (int i = 1; i <= N; i++) {
- 
-
-        int x = Adj[i].size();
-
-        if (x % 2 != 0)
-        {
-            OddSum += x;
-        }
-        else
-        {
-            EvenSum += x;
-        }
-             
-    }
-     
-    return abs(OddSum - EvenSum);
+    return result;
 }
  
-// Driver code
+
 int main()
 {
-    // Vertices and Edges
-    int N = 4, M = 6;
+    int arr[] = { 900, 940, 950, 1100, 1500, 1800 };
+    int dep[] = { 910, 1200, 1120, 1130, 1900, 2000 };
+    int n = sizeof(arr) / sizeof(arr[0]);
+    cout << "Minimum Number of Platforms Required = "
+         << findPlatform(arr, dep, n);
+    return 0;
+}
+
+
+//program 1
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int deno[] = { 1, 2, 5, 10, 20,
+               50, 100, 500, 1000 };
+int n = sizeof(deno) / sizeof(deno[0]);
  
-    // Edges
-    int edges[M][2] = { { 1, 2 }, { 1, 3 }, { 1, 4 },
-                       { 2, 3 }, { 2, 4 }, { 3, 4 } };
+void findMin(int V)
+{
+    sort(deno, deno + n);
  
-    // Function Call
-    cout<< OddEvenDegree(N, M, edges);
+
+    vector<int> ans;
  
+ 
+    for (int i = n - 1; i >= 0; i--) {
+ 
+ 
+        while (V >= deno[i]) {
+            V -= deno[i];
+            ans.push_back(deno[i]);
+        }
+    }
+ 
+
+    for (int i = 0; i < ans.size(); i++)
+        cout << ans[i] << " ";
+}
+ 
+
+int main()
+{
+    int n = 93;
+    cout << "Following is minimal"
+         << " number of change for " << n
+         << ": ";
+    findMin(n);
     return 0;
 }
